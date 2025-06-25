@@ -1,0 +1,26 @@
+# .github/workflows/main-caller.yml
+name: Main Caller Workflow
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+jobs:
+  call_reusable_workflow:
+    runs-on: ubuntu-latest
+    uses: ./.github/workflows/simple-reusable.yml@main
+    with:
+      message: "Hello from the main workflow!"
+    secrets:
+      MY_REUSABLE_STATUS: ${{ secrets.final_status }}
+
+  display_reusable_output:
+    runs-on: ubuntu-latest
+    needs: call_reusable_workflow
+    steps:
+      - name: Echo Reusable Workflow Output
+        run: |
+          echo "Status from reusable workflow: ${{ needs.call_reusable_workflow.outputs.final_status }}"
+          echo "Also available as a secret: ${{ secrets.MY_REUSABLE_STATUS }}"
