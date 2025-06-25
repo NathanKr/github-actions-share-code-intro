@@ -1,40 +1,37 @@
+# .github/workflows/simple-reusable.yml
 name: Simple Reusable Workflow
 
 on:
+  # This is crucial: 'workflow_call' makes this workflow reusable
   workflow_call:
-    # Define inputs this workflow expects
     inputs:
       message:
-        description: 'A message to display'
         required: true
         type: string
-      count:
-        description: 'A number to count up to'
-        required: false
-        type: number
-        default: 3 # If not provided, defaults to 3
-
-    # Define outputs this workflow can pass back to the caller
+        description: "A message passed from the caller workflow."
     outputs:
+      # Define an output that the caller can consume
       final_status:
-        description: 'Status of the reusable workflow run'
-        value: ${{ jobs.process_message.outputs.status }} # Reference an output from a job within this workflow
+        description: "The final status of the reusable workflow."
+        value: ${{ jobs.reusable_job.outputs.status_output }} # Ensure this matches an output from a job within this workflow
+    secrets:
+      MY_REUSABLE_STATUS:
+        required: false # Set to true if you always expect this secret
+        description: "A secret passed from the caller."
 
 jobs:
-  process_message:
+  reusable_job:
     runs-on: ubuntu-latest
     outputs:
-      status: ${{ steps.set_output.outputs.result_message }} # Define an output for this job
-
+      # This job outputs a value that is then exposed as a workflow output
+      status_output: ${{ steps.set_status.outputs.current_status }}
     steps:
-      - name: Display Message and Count
+      - name: Display Message
         run: |
-          echo "Received message: ${{ inputs.message }}"
-          for i in $(seq 1 ${{ inputs.count }}); do
-            echo "Counting: $i"
-          done
+          echo "Message from caller: ${{ inputs.message }}"
+          echo "Secret from caller (if provided): ${{ secrets.MY_REUSABLE_STATUS }}"
 
-      - name: Set Output Message
-        id: set_output # Give this step an ID to reference its outputs
+      - name: Set Output Status
+        id: set_status # ID for referencing outputs from this step
         run: |
-          echo "result_message=Reusable workflow completed successfully." >> $GITHUB_OUTPUT
+          echo "current_status=Success" >> "$GITHUB_OUTPUT"

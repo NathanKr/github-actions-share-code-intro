@@ -10,20 +10,23 @@ on:
 jobs:
   call_reusable_workflow:
     runs-on: ubuntu-latest
-    # Corrected indentation: 'uses' is a direct child of 'call_reusable_workflow'
+    # Corrected indentation for 'uses', 'with', and 'secrets'
+    # These must be direct properties of the job 'call_reusable_workflow'
     uses: ./.github/workflows/simple-reusable.yml
-    # Corrected indentation: 'with' is a direct child of 'call_reusable_workflow'
     with:
       message: "Hello from the main workflow!"
-    # 'secrets' is also a direct child of 'call_reusable_workflow'
     secrets:
+      # Ensure 'final_status' secret exists in your repository or organization secrets
       MY_REUSABLE_STATUS: ${{ secrets.final_status }}
 
   display_reusable_output:
     runs-on: ubuntu-latest
+    # This job needs the output from 'call_reusable_workflow'
     needs: call_reusable_workflow
     steps:
       - name: Echo Reusable Workflow Output
         run: |
+          # Accessing output from the called workflow
           echo "Status from reusable workflow: ${{ needs.call_reusable_workflow.outputs.final_status }}"
+          # Accessing a secret passed from the main workflow (if MY_REUSABLE_STATUS was also set as a secret in the calling workflow's repo/org)
           echo "Also available as a secret: ${{ secrets.MY_REUSABLE_STATUS }}"
