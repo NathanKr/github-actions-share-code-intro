@@ -10,7 +10,7 @@ on:
 jobs:
   call_reusable_workflow:
     runs-on: ubuntu-latest
-    uses: ./.github/workflows/simple-reusable.yml@main
+    uses: ./.github/workflows/simple-reusable.yml
     with:
       message: "Hello from the main workflow!"
     secrets:
