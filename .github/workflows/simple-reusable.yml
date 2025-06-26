@@ -1,4 +1,3 @@
-# .github/workflows/simple-reusable.yml
 name: Simple Reusable Workflow
 
 on:
