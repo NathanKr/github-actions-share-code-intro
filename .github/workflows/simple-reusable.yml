@@ -1,36 +1,17 @@
 name: Simple Reusable Workflow
 
 on:
-  # This is crucial: 'workflow_call' makes this workflow reusable
   workflow_call:
     inputs:
       message:
         required: true
         type: string
         description: "A message passed from the caller workflow."
-    outputs:
-      # Define an output that the caller can consume
-      final_status:
-        description: "The final status of the reusable workflow."
-        value: ${{ jobs.reusable_job.outputs.status_output }} # Ensure this matches an output from a job within this workflow
-    secrets:
-      MY_REUSABLE_STATUS:
-        required: false # Set to true if you always expect this secret
-        description: "A secret passed from the caller."
 
 jobs:
   reusable_job:
     runs-on: ubuntu-latest
-    outputs:
-      # This job outputs a value that is then exposed as a workflow output
-      status_output: ${{ steps.set_status.outputs.current_status }}
     steps:
-      - name: Display Message
+      - name: Print the message
         run: |
           echo "Message from caller: ${{ inputs.message }}"
-          echo "Secret from caller (if provided): ${{ secrets.MY_REUSABLE_STATUS }}"
-
-      - name: Set Output Status
-        id: set_status # ID for referencing outputs from this step
-        run: |
-          echo "current_status=Success" >> "$GITHUB_OUTPUT"
