@@ -1,13 +1,14 @@
-name: Main Caller Workflow
+name: Main Caller Workflow # The name of this workflow, displayed in GitHub's UI.
 
 on:
-  push:
+  push: # This workflow will trigger automatically when code is pushed to the 'main' branch.
     branches:
       - main
-  workflow_dispatch:
+  workflow_dispatch: # Allows you to manually trigger this workflow from the GitHub UI.
 
 jobs:
-  call_reusable_workflow:
-    uses: ./.github/workflows/simple-reusable.yml
-    with:
-      message: "Hello from the main workflow!"
+  call_reusable_workflow: # Defines a job within this workflow.
+    uses: ./.github/workflows/simple-reusable.yml # This is the crucial part. It calls the reusable workflow located at the specified path.
+    with: # This section allows you to pass inputs to the reusable workflow.
+      message: "Hello from the main workflow!" # Here, we're passing a string value to the 'message' input of the callee workflow.
+

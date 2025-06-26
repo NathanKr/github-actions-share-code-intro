@@ -70,10 +70,56 @@ for monprepo workflow_call is the best choice
 </ul>
 
 <h2>Code Structure</h2>
-....
+
+This example demonstrates a fundamental concept in GitHub Actions: reusable workflows. This pattern promotes modularity, reduces duplication, and makes your CI/CD pipelines more manageable, especially for larger projects.
+
+<h3>Caller workflow</h3>
+This is the main workflow that initiates or "calls" another workflow. It's often where you define the triggers and top-level jobs for your CI/CD process.
+
+```yml
+name: Main Caller Workflow # The name of this workflow, displayed in GitHub's UI.
+
+on:
+  push: # This workflow will trigger automatically when code is pushed to the 'main' branch.
+    branches:
+      - main
+  workflow_dispatch: # Allows you to manually trigger this workflow from the GitHub UI.
+
+jobs:
+  call_reusable_workflow: # Defines a job within this workflow.
+    uses: ./.github/workflows/simple-reusable.yml # This is the crucial part. It calls the reusable workflow located at the specified path.
+    with: # This section allows you to pass inputs to the reusable workflow.
+      message: "Hello from the main workflow!" # Here, we're passing a string value to the 'message' input of the callee workflow.
+```
+
+
+<h3>Callee workflow</h3>
+This is the workflow designed to be called and reused by other workflows. It encapsulates a specific set of actions or logic that can be consistently applied across different parts of your CI/CD pipeline.
+
+```yml
+# name: Simple Reusable Workflow # The name of this reusable workflow.
+
+on:
+  workflow_call: # This is the key trigger for a reusable workflow. It means this workflow can only be triggered by another workflow.
+    inputs: # Defines the inputs that this reusable workflow expects from its caller.
+      message: # The name of the input. This must match the key used in the 'with' section of the caller.
+        required: true # Specifies that this input must always be provided by the caller.
+        type: string # Defines the data type of the input.
+        description: "A message passed from the caller workflow." # A helpful description for anyone using this reusable workflow.
+
+jobs:
+  reusable_job: # Defines a job within this reusable workflow.
+    runs-on: ubuntu-latest # Specifies the operating system environment for this job.
+    steps: # A sequence of tasks to be executed within the job.
+      - name: Print the message # A descriptive name for this step.
+        run: | # Executes a shell command.
+          echo "Message from caller: ${{ inputs.message }}" # Accesses the 'message' input passed from the caller using the `inputs` context.
+```
 
 <h2>Demo</h2>
-....
+push to main is presented in the following image
+
+<img src='./figs/push-to-main.png'/>
 
 
 <h2>Points of Interest</h2>
