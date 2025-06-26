@@ -81,7 +81,6 @@ i have a monorepo for post2video. i have there two services : web server (next.j
 <h2>References</h2>
 <ul>
     <li><a href='https://docs.github.com/en/actions/sharing-automations/reusing-workflows'>official docs</a></li>
-    <li><a href='https://www.youtube.com/watch?v=Mir-uLSQmwA'> Efficiently Run GitHub Actions Workflows Locally with act Tool </a></li>
-   
+        <li><a href='https://www.youtube.com/watch?v=x239z6DdE0A'> Introduction to GitHub Actions: Learn Workflows with Examples </a></li>
 </ul>
 
