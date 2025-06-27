@@ -54,6 +54,8 @@ cd &lt;repository_name&gt;</code></pre>
 For monorepos, <code>workflow_call</code> is generally the best choice for sharing complex workflow logic
 
 <h2>workflow_call Basics</h2>
+<p><code>workflow_call</code> is a powerful feature in GitHub Actions that allows you to create <strong>reusable workflows</strong>. These workflows can be invoked by other workflows, helping you avoid code duplication and maintain cleaner, more modular CI/CD pipelines, especially in monorepos. To understand how they work, let's look at the key components involved:</p>
+
 
 <h3>Players</h3>
 <ul>
