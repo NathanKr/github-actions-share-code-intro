@@ -42,14 +42,14 @@ cd &lt;repository_name&gt;</code></pre>
     <li>GitHub Actions</li>
 </ul>
 
-
-<h2>Design options</h2>
+<h2>Design Options for Code Reuse</h2>
 <ul>
-    <li><code>workflow_call</code> for Reusable Workflows</li>
-    <li>Composite Actions</li>
-    <li>Docker Actions</li>
-    <li>Shell Scripts</li>
+  <li><strong><code>workflow_call</code></strong> – Best for sharing workflow logic in monorepos.</li>
+  <li><strong>Composite Actions</strong> – Great for bundling multiple shell steps into a reusable unit.</li>
+  <li><strong>Docker Actions</strong> – Useful when you need a consistent environment.</li>
+  <li><strong>Shell Scripts</strong> – Good for portability but harder to test and maintain at scale.</li>
 </ul>
+
 
 For monorepos, <code>workflow_call</code> is generally the best choice for sharing complex workflow logic
 
@@ -139,13 +139,14 @@ jobs:
 <h2>Demo</h2>
 <p>This image shows the GitHub Actions UI after a push to the main branch, demonstrating the Main Caller Workflow triggering the Simple Reusable Workflow.</p>
 
-<img src='./figs/push-to-main.png'/>
+<img src="./figs/push-to-main.png" alt="GitHub Actions UI showing Main Caller Workflow and Simple Reusable Workflow run"/>
 
 
 
 
-<h2>References</h2>
 <ul>
-    <li><a href='https://docs.github.com/en/actions/sharing-automations/reusing-workflows'>Official GitHub Actions Docs: Reusing Workflows</a></li> and <li><a href='https://www.youtube.com/watch?v=x239z6DdE0A'>Introduction to GitHub Actions: Learn Workflows with Examples (YouTube)</a></li>
+  <li><a href="https://docs.github.com/en/actions/sharing-automations/reusing-workflows">Official GitHub Actions Docs: Reusing Workflows</a></li>
+  <li><a href="https://www.youtube.com/watch?v=x239z6DdE0A">Introduction to GitHub Actions (YouTube)</a></li>
 </ul>
+
 
