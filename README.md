@@ -1,39 +1,59 @@
 <h1>Project Name</h1>
-....
-
+Simple Code Sharing Sample with GitHub Actions
 
 
 <h2>Project Description</h2>
-....
+This project provides a simple, practical example of how to share and reuse code between GitHub Actions workflows, especially within a monorepo structure. It demonstrates the use of <code>workflow_call</code> to create reusable workflows, promoting modularity and reducing code duplication in your CI/CD pipelines. This example includes a caller workflow that initiates a reusable workflow and a callee workflow that encapsulates shared logic.
 
 <h2>My Motivation</h2>
-i have a monorepo for post2video. i have there two services : web server (next.js) and bullmq worker. Each has its own github actions workflow but 90% of workflow code is the same so how to share code ?
+I manage a monorepo for 'post2video' services, which includes a web server (Next.js) and a BullMQ worker. Each service currently has its own GitHub Actions workflow, but approximately 90% of the workflow code is identical. My motivation for this project is to demonstrate an effective way to share this common code
 
 <h2>Installation</h2>
-....
+<p>To examine the sample workflows and code structure:</p>
+<ol>
+    <li>
+        <strong>Clone the repository:</strong>
+        <pre><code>git clone &lt;repository_url&gt;
+cd &lt;repository_name&gt;</code></pre>
+        <p>Replace <code>&lt;repository_url&gt;</code> with the actual URL of your GitHub repository.<br>Replace <code>&lt;repository_name&gt;</code> with the name of the directory that was created when you cloned the repository.</p>
+    </li>
+    <li>
+        <p>Once cloned, you can explore the workflow definitions in the <code>.github/workflows/</code> directory.</p>
+    </li>
+</ol>
 
 
 <h2>Usage</h2>
-....
 
+<p>To see the shared workflow in action:</p>
+
+<ol>
+  <li>
+    <p><strong>Push to <code>main</code> branch:</strong> The <code>main-caller.yml</code> workflow is configured to automatically run when changes are pushed to the <code>main</code> branch of this repository.</p>
+  </li>
+  <li>
+    <p><strong>Manual Trigger:</strong> Alternatively, you can manually trigger the <code>Main Caller Workflow</code> from the GitHub Actions tab in your repository. Look for the "Run workflow" dropdown on the workflow's page.</p>
+  </li>
+</ol>
+<p>After triggering, observe the workflow run details to see the <code>simple-reusable.yml</code> workflow being called and executed.</p>
 
 <h2>Technologies Used</h2>
 <ul>
-    <li>github actions</li>
+    <li>GitHub Actions</li>
 </ul>
 
 
 <h2>Design options</h2>
 <ul>
-    <li>`workflow_call` for Reusable Workflows</li>
+    <li><code>workflow_call</code> for Reusable Workflows</li>
     <li>Composite Actions</li>
     <li>Docker Actions</li>
     <li>Shell Scripts</li>
 </ul>
 
-for monprepo workflow_call is the best choice
+For monorepos, <code>workflow_call</code> is generally the best choice for sharing complex workflow logic
 
-<h2>workflow_call basics</h2>
+<h2>workflow_call Basics</h2>
 
 <h3>Players</h3>
 <ul>
@@ -117,20 +137,15 @@ jobs:
 ```
 
 <h2>Demo</h2>
-push to main is presented in the following image
+<p>This image shows the GitHub Actions UI after a push to the main branch, demonstrating the Main Caller Workflow triggering the Simple Reusable Workflow.</p>
 
 <img src='./figs/push-to-main.png'/>
 
 
-<h2>Points of Interest</h2>
-<ul>
-    <li>...</li>
-   
-</ul>
+
 
 <h2>References</h2>
 <ul>
-    <li><a href='https://docs.github.com/en/actions/sharing-automations/reusing-workflows'>official docs</a></li>
-        <li><a href='https://www.youtube.com/watch?v=x239z6DdE0A'> Introduction to GitHub Actions: Learn Workflows with Examples </a></li>
+    <li><a href='https://docs.github.com/en/actions/sharing-automations/reusing-workflows'>Official GitHub Actions Docs: Reusing Workflows</a></li> and <li><a href='https://www.youtube.com/watch?v=x239z6DdE0A'>Introduction to GitHub Actions: Learn Workflows with Examples (YouTube)</a></li>
 </ul>
 
